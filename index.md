@@ -1,3 +1,6 @@
 # Notes from Max Dei Rossi
 
-Notes will be filled in here later
+Instructions:
+* Add the files to your src directory
+* Run `python3 parse-musicxml.py [filename.musicxml]` with a musicxml file in the src directory
+* Run the main program
