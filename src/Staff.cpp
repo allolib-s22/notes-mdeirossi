@@ -60,20 +60,28 @@ void Staff::addTuplet(int numNotes, NoteType type, bool dotted)
 
 void Staff::addTiedNote(NoteName name, Accidental accidental, NoteType type)
 {
-	Note* n;
 	for (int i = measures.size() - 1; i >= 0; --i) {
-		for (int j = measures.at(i).getNotes().size() - 1; j >= 0; --j) {
-			n = &measures.at(i).getNotes().at(j);
-			if (n->isRest()) {
+		Measure& m = measures[i];
+		for (int j = m.getNotes().size() - 1; j >= 0; --j) {
+			Note& n = m.getNotes()[j];
+			if (n.isRest()) {
 				std::cerr << "No note to tie from" << std::endl;
 				throw std::logic_error("No note to tie from");
 			}
 
-			auto tie = n->getEndTieVect();
+			auto tie = n.getEndTieVect();
 			auto isTieEnd = std::find(tie.begin(), tie.end(), std::make_pair(name, accidental));
 			if (isTieEnd == tie.end()) {
-				measures.back().addTiedNote(n->getNoteName(), n->getAccidental(), type);
-				n->setBeatUnits(n->getBeatUnits() + as_int(type));
+				measures.back().addTiedNote(n.getNoteName(), n.getAccidental(), type);
+				int timeToAdd = as_int(type);
+				Note& n = m.getNotes()[j];
+				if (measures.back().getTupletBeatsRemaining() > 0) {
+					timeToAdd *= measures.back().getTupletDurationModifier();
+				}
+
+				n.setBeatUnits(n.getBeatUnits() + timeToAdd);
+				std::cout << n.getBeatUnits() << std::endl;
+
 				return;
 			}
 		}

@@ -26,6 +26,8 @@ public:
     TimeSignature& getTimeSignature() { return this->timeSignature; }
     std::vector<Note>& getNotes() { return this->notes; }
     int getBeatUnitsRemaining() { return this->beatUnitsRemaining; }
+    int getTupletBeatsRemaining() { return this->tupletBeatsRemaining; }
+    float getTupletDurationModifier() { return this->tupletDurationModifier; }
     float getNewTempo() { return this->newTempo; }
     bool isEmpty() { return this->notes.empty(); }
 

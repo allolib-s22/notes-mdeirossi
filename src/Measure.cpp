@@ -133,6 +133,7 @@ void Measure::addTuplet(int numNotes, NoteType type, bool dotted)
     tupletBeatsRemaining = numNotes * (as_int(type) / static_cast<int>(std::pow(2, std::ceil(numNotes / 4.0))));
     tupletDurationModifier = static_cast<float>(as_int(type)) / static_cast<float>(tupletBeatsRemaining);
     beatUnitsRemaining -= as_int(type);
+
 }
 
 void Measure::addTiedNote(NoteName name, Accidental accidental, NoteType type)
